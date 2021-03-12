@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head><title>Home Page</title></head>
+<body>
+<h1>Hello !</h1>
+<p>Welcome to <span th:text="${appName}">Our App</span></p>
+
+<div th:switch="${agents}">
+    <h2 th:case="null">No Agents yet!</h2>
+    <div th:case="*">
+        <h2>Agents</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="agent : ${agents}">
+                <td th:text="${agent.id}"></td>
+                <td th:text="${agent.firstName}"></td>
+                <td th:text="${agent.lastName}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p><a href="/newAgent">Add a new Agent</a></p>
+
+
+</div>
+</body>
+</html>

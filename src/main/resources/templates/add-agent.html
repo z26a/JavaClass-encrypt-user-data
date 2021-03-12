@@ -1,0 +1,13 @@
+<form action="#" th:action="@{/addAgent}" th:object="${agent}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <p><label for="firstName">First Name : </label>
+        <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+
+    </p>
+    <p><label for="lastName">Last Name : </label>
+        <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+    </p>
+    <input type="submit" value="Add Agent">
+</form>

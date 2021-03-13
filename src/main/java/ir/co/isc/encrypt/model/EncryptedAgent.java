@@ -18,6 +18,7 @@ public class EncryptedAgent {
 
     private Long id;
     private String encryptedFirstName;
+
     private String encryptedLastName;
 
     @OneToMany(mappedBy = "agent"
@@ -33,29 +34,6 @@ public class EncryptedAgent {
     public EncryptedAgent() {
     }
 
-    public String getEncryptedFirstName() {
-        return encryptedFirstName;
-    }
-
-    public String getEncryptedLastName() {
-        return encryptedLastName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setEncryptedFirstName(String encryptedName) {
-        this.encryptedFirstName = encryptedName;
-    }
-
-    public void setEncryptedLastName(String encryptedLastName) {
-        this.encryptedLastName = encryptedLastName;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
 
     @Override

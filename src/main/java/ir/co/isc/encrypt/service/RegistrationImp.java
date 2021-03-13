@@ -51,16 +51,17 @@ public class RegistrationImp implements Registration {
     @Override
     public List<Agent> retrieveAll() throws NoSuchAlgorithmException,
             InvalidKeyException, NoSuchProviderException, InvalidKeySpecException,
-            NoSuchPaddingException {
+            NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
 
         List<AgentDto> agentDtos=new ArrayList<>();
         agentDtos.addAll(keyRepository.findAllEncryptedAgents());
 
         List<Agent> agents=new ArrayList<>();
         agents.addAll(cryptography.decrypt(agentDtos));
+
 return agents;
 
-//        return agents;
+//
     }
 
 

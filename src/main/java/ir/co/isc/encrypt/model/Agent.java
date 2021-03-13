@@ -28,12 +28,10 @@ public class Agent {
         this.lastName = lastName;
     }
 
-//    public Agent() {
-//    }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-//    public long getId() {
-//        return id;
-//    }
 
     public String getFirstName() {
         return firstName;
@@ -41,23 +39,6 @@ public class Agent {
 
     public String getLastName() {
         return lastName;
-    }
-
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     @Override

@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +33,7 @@ public class HomeController {
     @GetMapping("/")
     public String homePage(Model model) throws NoSuchProviderException,
             NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidKeySpecException, InvalidKeyException {
+            InvalidKeySpecException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 
         model.addAttribute("appName", appName);
         model.addAttribute("agents",registration.retrieveAll());

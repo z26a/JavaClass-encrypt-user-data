@@ -3,6 +3,7 @@ package ir.co.isc.encrypt.controller;
 
 import ir.co.isc.encrypt.model.EncryptedAgent;
 import ir.co.isc.encrypt.repository.AgentRepository;
+import ir.co.isc.encrypt.repository.KeyRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,17 @@ public class NewController {
     @Autowired
     private AgentRepository agentRepository;
 
+    @Autowired
+    private KeyRepository keyRepository;
+
+    @GetMapping("")
     public List agents() {
         return StreamSupport.stream(agentRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
     public EncryptedAgent agent(@PathVariable(name = "id") Long id) {
         return agentRepository.findById(id).get();
     }
+
 }

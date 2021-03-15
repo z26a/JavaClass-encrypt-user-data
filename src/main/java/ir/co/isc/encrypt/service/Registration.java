@@ -18,6 +18,6 @@ import java.util.List;
 
 public interface Registration {
     void saveNewAgent(Agent agent) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException;
-//    List<Agent> retrieveAll();
+
     List<Agent> retrieveAll() throws NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException;
 }

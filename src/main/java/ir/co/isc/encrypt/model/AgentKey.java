@@ -1,5 +1,6 @@
 package ir.co.isc.encrypt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class AgentKey {
 
     @ManyToOne
     @JoinColumn(name = "Agent_Id", nullable = false)
+    @JsonIgnore
     private EncryptedAgent agent;
 
 

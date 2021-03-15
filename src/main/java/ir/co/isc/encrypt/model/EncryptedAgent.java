@@ -1,5 +1,7 @@
 package ir.co.isc.encrypt.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Slf4j
+@Getter
+@Setter
 public class EncryptedAgent {
 
     @Id
@@ -34,7 +38,21 @@ public class EncryptedAgent {
     public EncryptedAgent() {
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getEncryptedFirstName() {
+        return encryptedFirstName;
+    }
+
+    public String getEncryptedLastName() {
+        return encryptedLastName;
+    }
+
+    public Set<AgentKey> getAgentKeySet() {
+        return agentKeySet;
+    }
 
     @Override
     public String toString() {

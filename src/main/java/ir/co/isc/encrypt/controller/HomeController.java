@@ -2,6 +2,7 @@ package ir.co.isc.encrypt.controller;
 
 
 import ir.co.isc.encrypt.model.Agent;
+import ir.co.isc.encrypt.repository.AgentRepository;
 import ir.co.isc.encrypt.service.Registration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class HomeController {
 
     @Autowired
     private Registration registration;
+
+    @Autowired
+    private AgentRepository agentRepository;
 
     @GetMapping("/")
     public String homePage(Model model) throws NoSuchProviderException,

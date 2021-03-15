@@ -1,36 +1,170 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head><title>Home Page</title></head>
-<body>
-<h1>Hello !</h1>
-<p>Welcome to <span th:text="${appName}">Our App</span></p>
+<head><title>Home Page</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            color:  Black;
+            -webkit-font-smoothing: antialiased;
+            font-smoothing: antialiased;
+            background:  #0ca3d2;
+        }
 
-<div th:switch="${agents}">
+        @media screen and (max-width: 580px) {
+            body {
+                font-size: 16px;
+                line-height: 22px;
+            }
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            padding: 40px;
+            max-width: 800px;
+        }
+
+        .table {
+            margin: 0 0 40px 0;
+            width: 100%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            display: table;
+        }
+
+        @media screen and (max-width: 580px) {
+            .table {
+                display: block;
+            }
+        }
+
+        .row {
+            display: table-row;
+            background: #f6f6f6;
+        }
+
+        .row:nth-of-type(odd) {
+            background: #e9e9e9;
+        }
+
+
+        .row.blue {
+            background: #0ca3d2;
+        }
+
+        @media screen and (max-width: 580px) {
+            .row {
+                padding: 14px 0 7px;
+                display: block;
+            }
+
+            .row.header {
+                padding: 0;
+                height: 6px;
+            }
+
+            .row.header .cell {
+                display: none;
+            }
+
+            .row .cell {
+                margin-bottom: 10px;
+            }
+
+            .row .cell:before {
+                margin-bottom: 3px;
+                content: attr(data-title);
+                min-width: 98px;
+                font-size: 10px;
+                line-height: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #969696;
+                display: block;
+            }
+        }
+
+        .cell {
+            padding: 6px 12px;
+            display: table-cell;
+        }
+
+        @media screen and (max-width: 580px) {
+            .cell {
+                padding: 2px 16px;
+                display: block;
+            }
+        }
+
+        .submit{
+            padding: 0 18px;
+            height: 29px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #527881;
+            text-shadow: 0 1px #e3f1f1;
+            background: #cde5ef;
+            border: 1px solid;
+            border-color: #b4ccce #b3c0c8 #9eb9c2;
+            border-radius: 16px;
+            outline: 0;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            background-image: -webkit-linear-gradient(top, #edf5f8, #cde5ef);
+            background-image: -moz-linear-gradient(top, #edf5f8, #cde5ef);
+            background-image: -o-linear-gradient(top, #edf5f8, #cde5ef);
+            background-image: linear-gradient(to bottom, #edf5f8, #cde5ef);
+            -webkit-box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
+            box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+        .login {
+            position: relative;
+            margin: 30px auto;
+            padding: 20px 20px 20px;
+            width: 310px;
+            background: white;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+
+<div th:switch="${agents}" class="login">
+    <h1>Hello !</h1>
+    <p>Welcome to <span th:text="${appName}">Our App</span></p>
     <h2 th:case="null">No Agents yet!</h2>
-    <div th:case="*">
+    <div th:case="*" class="table">
         <h2>Agents</h2>
-        <table>
+        <table class="responsive-table">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+            <tr class="row header blue">
+                <th class="cell">ID</th>
+                <th class="cell">First Name</th>
+                <th class="cell">Last Name</th>
 
             </tr>
             </thead>
             <tbody>
-            <tr th:each="agent : ${agents}">
-                <td th:text="${agent.id}"></td>
-                <td th:text="${agent.firstName}"></td>
-                <td th:text="${agent.lastName}"></td>
+            <tr th:each="agent : ${agents}" class="row">
+                <td th:text="${agent.id}" class="cell"></td>
+                <td th:text="${agent.firstName}" class="cell"></td>
+                <td th:text="${agent.lastName}" class="cell"></td>
 
             </tr>
             </tbody>
         </table>
     </div>
 
-    <p><a href="/newAgent">Add a new Agent</a></p>
+    <p><a href="/newAgent" class="submit">Add a new Agent</a></p>
 
 
+</div>
 </div>
 </body>
 </html>

@@ -7,16 +7,10 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.interfaces.ECPrivateKey;
-import java.security.interfaces.ECPublicKey;
-import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPrivateCrtKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
 @Service
@@ -45,8 +39,6 @@ public class CryptographyImp implements Cryptography {
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
         byte[] name = agent.getFirstName().getBytes();
-
-
         try {
             encryptedFirstName = Base64.getEncoder().encodeToString(cipher.doFinal(name));
 
@@ -62,19 +54,13 @@ public class CryptographyImp implements Cryptography {
             throw new IllegalArgumentException(e);
         }
 
-
         EncryptedAgent encryptedAgent = new EncryptedAgent(encryptedFirstName, encryptedLastName);
 
         byte[] byte_pubkey = publicKey.getEncoded();
         String str_key_pub = Base64.getEncoder().encodeToString(byte_pubkey);
 
-
-
-
         byte[] byte_prikey = kp.getPrivate().getEncoded();
         String str_key_pri = Base64.getEncoder().encodeToString(byte_prikey);
-
-
 
         AgentKey key = new AgentKey(str_key_pub, str_key_pri);
         EncryptedAgentKey encryptedAgentKey = new EncryptedAgentKey(key, encryptedAgent);
@@ -86,41 +72,44 @@ public class CryptographyImp implements Cryptography {
 
     @Override
     public List<Agent> decrypt(List<AgentDto> agentDtos) throws NoSuchAlgorithmException,
-            InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, NoSuchProviderException, BadPaddingException, IllegalBlockSizeException {
+            InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, NoSuchProviderException,
+            BadPaddingException, IllegalBlockSizeException {
 
         String firstName, lastName;
 
         List<Agent> agentsList = new ArrayList<>();
 
         for (AgentDto agentDto : agentDtos) {
-            byte[] byte_prikey = Base64.getDecoder().decode(agentDto.getPrivateKey());
 
-
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-
-            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(byte_prikey);
-            PrivateKey privateKey = kf.generatePrivate(spec);
-
-            Cipher cipher = null;
-            cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
-
-            byte[] name=Base64.getDecoder().decode(agentDto.getEncryptedFirstName());
-
-            firstName=new String(cipher.doFinal(name),StandardCharsets.UTF_8);
-            System.out.println(firstName);
-
-            byte[] lName =Base64.getDecoder().decode(agentDto.getEncryptedLastName());
-            lastName=new String(cipher.doFinal(lName),StandardCharsets.UTF_8);
+            firstName=decryptWithPrivateKey(agentDto.getPrivateKey(),agentDto.getEncryptedFirstName());
+            lastName=decryptWithPrivateKey(agentDto.getPrivateKey(),agentDto.getEncryptedLastName());
 
             Agent agent = new Agent(firstName, lastName);
             agent.setId(agentDto.getId());
             agentsList.add(agent);
         }
             return agentsList;
-        }
+    }
 
 
 
+public String decryptWithPrivateKey(String priKey, String agentName) throws NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidKeySpecException, BadPaddingException, IllegalBlockSizeException {
+
+
+    byte[] byte_prikey = Base64.getDecoder().decode(priKey);
+
+    KeyFactory kf = KeyFactory.getInstance("RSA");
+
+    PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(byte_prikey);
+    PrivateKey privateKey = kf.generatePrivate(spec);
+
+    Cipher cipher;
+    cipher = Cipher.getInstance("RSA");
+    cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+    byte[] name = Base64.getDecoder().decode(agentName);
+    return  new String(cipher.doFinal(name), StandardCharsets.UTF_8);
+}
 }
 
